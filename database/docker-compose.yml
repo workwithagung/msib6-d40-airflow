@@ -1,7 +1,7 @@
 version: '2'
 services:
   postgres-db:
-    image: postgres:15
+    image: postgres:13
     container_name: db-postgres
     environment:
       PGDATA: /var/lib/postgresql/data
@@ -9,9 +9,9 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: dwh
     volumes:
-    - postgres_data:/var/lib/postgresql/data
+    - pg_data:/var/lib/postgresql/data
     ports:
-    - 5435:5434/tcp
+    - 5436:5432/tcp
     networks:
       - my-network
 
@@ -19,7 +19,7 @@ services:
     image: mysql:8.0
     container_name: db-mysql
     environment:
-      - MYSQL_DATABASE=mysql
+      - MYSQL_DATABASE=sources
       - MYSQL_USER=mysql
       - MYSQL_PASSWORD=mysql
       - MYSQL_ROOT_PASSWORD=mysql
@@ -32,7 +32,7 @@ services:
 volumes:
   mysql_data: # docker volume create mysql_data
     external: true
-  postgres_data: # docker volume create postgres_data
+  pg_data: # docker volume create postgres_data
     external: true
 
 networks:
